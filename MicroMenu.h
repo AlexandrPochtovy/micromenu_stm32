@@ -6,63 +6,80 @@
      dean [at] fourwalledcubicle.com
 
         Royalty-free for all uses.
-	                                  */
+	                                  
+--------------------------------------------------------------------------------------------------
+31.08.2023 Alexandr Pochtovy
+
+Fork micromenu for STM32.  
+*/
+
 #ifndef _MICRO_MENU_H_
 #define _MICRO_MENU_H_
 
-	#include <stddef.h>
-	#include <stdint.h>
+#include <stddef.h>
+#include <stdint.h>
 
-	#include "MenuConfig.h"
+	/** Configuration for the macro or function required to read out a pointer from
+	 *  the memory storage space set by \ref MENU_ITEM_STORAGE.
+	 *
+	 *  \param[in] Addr  Address of the pointer to read
+	 */
+#define MENU_ITEM_READ_POINTER(Addr)	*(Addr)
 
-	/** Type define for a menu item. Menu items should be initialized via the helper
+/*	Type for select operational mode^ navigate or edit	*/
+typedef enum MenuMode {
+	navigate,
+	edit
+} MenuMode_t;
+
+/*	Type define for a menu item. Menu items should be initialized via the helper
 	 *  macro \ref MENU_ITEM(), not created from this type directly in user-code.
 	 */
 	typedef const struct Menu_Item {
-		const struct Menu_Item *Next; /**< Pointer to the next menu item of this menu item */
-		const struct Menu_Item *Previous; /**< Pointer to the previous menu item of this menu item */
-		const struct Menu_Item *Parent; /**< Pointer to the parent menu item of this menu item */
-		const struct Menu_Item *Child; /**< Pointer to the child menu item of this menu item */
-		void (*SelectCallback)(void); /**< Pointer to the optional menu-specific select callback of this menu item */
-		void (*EnterCallback)(void); /**< Pointer to the optional menu-specific enter callback of this menu item */
-		const char Text[]; /**< Menu item text to pass to the menu display callback function */
+		const struct Menu_Item *Next; 		// Pointer to the next menu item of this menu item
+		const struct Menu_Item *Previous; 	// Pointer to the previous menu item of this menu item
+		const struct Menu_Item *Parent; 	// Pointer to the parent menu item of this menu item
+		const struct Menu_Item *Child; 		// Pointer to the child menu item of this menu item
+		void (*SelectCallback)(void); 		// Pointer to the optional menu-specific select callback of this menu item
+		void (*EnterCallback)(void); 		// Pointer to the optional menu-specific enter callback of this menu item
+		MenuMode_t mode;					// menu mode
+		const char Text[]; 					// Menu item text to pass to the menu display callback function
 	} Menu_Item_t;
 
-	/** Creates a new menu item entry with the specified links and callbacks.
+	/*	Creates a new menu item entry with the specified links and callbacks.
 	 *
 	 *  \param[in] Name      Name of the menu entry, must be unique.
 	 *  \param[in] Next      Name of the next linked menu item, or \ref NULL_MENU if no menu link.
 	 *  \param[in] Previous  Name of the previous linked menu item, or \ref NULL_MENU if no menu link.
 	 *  \param[in] Parent    Name of the parent linked menu item, or \ref NULL_MENU if no menu link.
 	 *  \param[in] Child     Name of the child linked menu item, or \ref NULL_MENU if no menu link.
-	 *  \param[in] SelectFunc  Function callback to execute when the menu item is selected, or \c NULL for no callback.
-	 *  \param[in] EnterFunc   Function callback to execute when the menu item is entered, or \c NULL for no callback.
+	 *  \param[in] SelectItemFunc  Function callback to execute when the menu item is selected, or \c NULL for no callback.
+	 *  \param[in] EnterItemFunc   Function callback to execute when the menu item is entered, or \c NULL for no callback.
 	 */
 	#define MENU_ITEM(Name, Next, Previous, Parent, Child, SelectFunc, EnterFunc, Text) \
-		extern Menu_Item_t MENU_ITEM_STORAGE Next;     \
-		extern Menu_Item_t MENU_ITEM_STORAGE Previous; \
-		extern Menu_Item_t MENU_ITEM_STORAGE Parent;   \
-		extern Menu_Item_t MENU_ITEM_STORAGE Child;  \
-		Menu_Item_t MENU_ITEM_STORAGE Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, Text}
+		extern Menu_Item_t const Next;     	\
+		extern Menu_Item_t const Previous; 	\
+		extern Menu_Item_t const Parent;   	\
+		extern Menu_Item_t const Child;  	\
+		Menu_Item_t const Name = {&Next, &Previous, &Parent, &Child, SelectFunc, EnterFunc, Text}
 
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the menu parent. */
-	#define MENU_PARENT         MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Parent)
+	#define MENU_PARENT			MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Parent)
 
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the menu child. */
-	#define MENU_CHILD          MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Child)
+	#define MENU_CHILD			MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Child)
 
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the next linked menu item. */
-	#define MENU_NEXT           MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Next)
+	#define MENU_NEXT			MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Next)
 
 	/** Relative navigational menu entry for \ref Menu_Navigate(), to move to the previous linked menu item. */
-	#define MENU_PREVIOUS       MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Previous)
+	#define MENU_PREVIOUS		MENU_ITEM_READ_POINTER(&Menu_GetCurrentMenu()->Previous)
 
 	/** Null menu entry, used in \ref MENU_ITEM() definitions where no menu link is to be made. */
-	extern Menu_Item_t MENU_ITEM_STORAGE NULL_MENU;
+	extern Menu_Item_t const NULL_MENU;
 
-	/** Retrieves the currently selected meny item.
-	 *
-	 *  \return Pointer to the currently selected meny item.
+	/*	Retrieves the currently selected meny item.
+			return Pointer to the currently selected meny item.
 	 */
 	Menu_Item_t* Menu_GetCurrentMenu(void);
 
@@ -79,9 +96,9 @@
 	 *
 	 *  \ref WriteFunc  Pointer to a callback function to execute for each selected menu item.
 	 */
-	void Menu_SetGenericWriteCallback(void (*WriteFunc)(const char* Text));
+	void Menu_SetGenericWriteCallback(void (*SelectFunc)(void));
 
 	/** Enters the currently selected menu item, running its configured callback function (if any). */
-	void Menu_EnterCurrentItem(void);
+	void Menu_EnterCurrentItem(void (*EnterFunc)(void));
 
 #endif

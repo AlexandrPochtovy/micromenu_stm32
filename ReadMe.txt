@@ -5,6 +5,13 @@
 	
 	    Royalty-free for all uses.
 
-This is the second iteration of my original "MicroMenu" project, a tiny, royalty free library for the easy creation of menus within an embedded system. Menus can be stored completely in flash memory if desired, saving precious SRAM.
+This is the second iteration of my original "MicroMenu" project, a tiny, royalty free library for the easy creation of menus within an embedded system. 
+Menus can be stored completely in flash memory if desired, saving precious SRAM.
 
-The new version of MicroMenu has increased type safety, a better example and an easier to configure interface. It supports menu navigation through both relative (Parent, Child, Next and Previous) menu item links, as well as to absolute menu item nodes.
+The new version of MicroMenu has increased type safety, a better example and an easier to configure interface. 
+It supports menu navigation through both relative (Parent, Child, Next and Previous) menu item links, as well as to absolute menu item nodes.
+
+--------------------------------------------------------------------------------------------------
+31.08.2023 Alexandr Pochtovy
+
+Fork micromenu for STM32.
