@@ -13,7 +13,20 @@
 	#include <stddef.h>
 	#include <stdint.h>
 
-	#include "MenuConfig.h"
+	//#include "MenuConfig.h"
+
+		/** Configuration for the desired memory storage location of created menu items.
+	 *  This may be configured to locate the menus into FLASH memory space, SRAM, or
+	 *  any other suitable memory space.
+	 */
+	#define MENU_ITEM_STORAGE              const
+	
+	/** Configuration for the macro or function required to read out a pointer from
+	 *  the memory storage space set by \ref MENU_ITEM_STORAGE.
+	 *
+	 *  \param[in] Addr  Address of the pointer to read
+	 */
+	#define MENU_ITEM_READ_POINTER(Addr)   *(Addr)
 
 	/** Type define for a menu item. Menu items should be initialized via the helper
 	 *  macro \ref MENU_ITEM(), not created from this type directly in user-code.
