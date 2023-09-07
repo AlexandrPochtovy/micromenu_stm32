@@ -41,11 +41,11 @@ void Menu_Navigate(Menu_Item_t* const NewMenu)//All magic is here!
 	}
 	else {
 		CurrentMenuItem = NewMenu;
-		EnterCallBackFunc = MENU_ITEM_READ_POINTER(&CurrentMenuItem->EnterCallback);
+		EnterCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->EnterCallback);
 		if (EnterCallBackFunc) {
 			EnterCallBackFunc();
 		}
-		SelectCallBackFunc = MENU_ITEM_READ_POINTER(&CurrentMenuItem->SelectCallback);
+		SelectCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->SelectCallback);
 		if (SelectCallBackFunc) {
 			SelectCallBackFunc();
 		}
