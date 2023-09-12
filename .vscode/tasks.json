@@ -2,7 +2,7 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "g++.exe build active file",
+            "label": "g++.exe build",
             "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
             "args": [
                 "-g",
@@ -15,11 +15,16 @@
             },
             "options": {
                 "cwd": "C:\\msys64\\mingw64\\bin"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         },
         {
             "type": "shell",
-            "label": "g++ build & run active file",
+            "label": "g++ build & run",
             "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
             "args": [
                 "${fileDirname}\\*.c",

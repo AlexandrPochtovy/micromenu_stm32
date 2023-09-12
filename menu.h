@@ -3,17 +3,19 @@
 
 extern int distance;
 extern int doze;
+extern float ramp;
 
-void Menu1_Select(void);
-void Menu1_Enter(void);
+void Menu_1_Key1(void);//reset value
+void Menu_1_Key2(void);//set default value
+void Menu_1_Key3(void);//up value
+void Menu_1_Key4(void);//down value
 
-void Menu2_Select(void);
-void Menu2_Enter(void);
+void Menu_2_Key1(void);//reset value
+void Menu_2_Key2(void);//set default value
+void Menu_2_Key3(void);//up value
+void Menu_2_Key4(void);//down value
 
-void Menu3_Select(void);
-void Menu3_Enter(void);
-
-void Menu1_1_Select(void);
-void Menu1_1_Enter(void);
-void Menu1_2_Select(void);
-void Menu1_2_Enter(void);
+void Menu_3_Key1(void);//reset value
+void Menu_3_Key2(void);//set default value
+void Menu_3_Key3(void);//up value
+void Menu_3_Key4(void);//down value

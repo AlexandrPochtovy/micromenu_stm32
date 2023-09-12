@@ -1,16 +1,40 @@
 #include "menu.h"
 
-void Menu1_Select(void) 	{ printf("Menu lvl 1. Distance = %d\n", distance); }
-void Menu1_Enter(void) 		{ ++distance; }
+void Menu_1_Key1(void) {//reset value
+    distance = 0;
+}
+void Menu_1_Key2(void) {//set default value
+    distance = 110;
+}
+void Menu_1_Key3(void) {//up value
+    ++distance;
+}
+void Menu_1_Key4(void) {//down value
+    --distance;
+}
 
-void Menu2_Select(void) 	{ printf("Menu lvl 1. Distance = %d\n", distance); }
-void Menu2_Enter(void) 		{ --distance; }
+void Menu_2_Key1(void) {//reset value
+    doze = 0;
+}
+void Menu_2_Key2(void) {//set default value
+    doze = 110;
+}
+void Menu_2_Key3(void) {//up value
+    doze += 2;
+}
+void Menu_2_Key4(void) {//down value
+    doze -= 3;
+}
 
-void Menu3_Select(void) 	{ printf("Menu lvl 3 is empty\n"); }
-void Menu3_Enter(void) 		{ printf("Menu lvl 3 is empty\n"); }
-
-void Menu1_1_Select(void) 	{ printf("Select menu lvl 1_1. Doze = %d\n", doze); }
-void Menu1_1_Enter(void) 	{ ++doze; }
-
-void Menu1_2_Select(void) 	{ printf("Select menu lvl 1_1. Doze = %d\n", doze); }
-void Menu1_2_Enter(void) 	{ --doze; }
+void Menu_3_Key1(void) {//reset value
+    ramp = 0.0;
+}
+void Menu_3_Key2(void) {//set default value
+    ramp = 1.5;
+}
+void Menu_3_Key3(void) {//up value
+    ramp += 0.1;
+}
+void Menu_3_Key4(void) {//down value
+    ramp -= 0.1;
+}
