@@ -36,18 +36,39 @@ Menu_Item_t* Menu_GetCurrentMenu(void)
 
 void Menu_Navigate(Menu_Item_t* const NewMenu)//All magic is here!
 {
-	if ((NewMenu == &NULL_MENU) || (NewMenu == NULL)) {
-		return;
-	}
-	else {
+	if ((NewMenu != &NULL_MENU) && (NewMenu != NULL)) {
 		CurrentMenuItem = NewMenu;
-		EnterCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->EnterCallback);
-		if (EnterCallBackFunc) {
-			EnterCallBackFunc();
-		}
-		SelectCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->SelectCallback);
-		if (SelectCallBackFunc) {
-			SelectCallBackFunc();
-		}
+	}
+	SelectCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->MenuDisplayCallback);
+	if (SelectCallBackFunc) {
+		SelectCallBackFunc();
+	}
+}
+
+void Menu_RunKey1_Callback(void) {
+	SelectCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->Key1Callback);
+	if (SelectCallBackFunc) {
+		SelectCallBackFunc();
+	}
+}
+
+void Menu_RunKey2_Callback(void) {
+		SelectCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->Key2Callback);
+	if (SelectCallBackFunc) {
+		SelectCallBackFunc();
+	}
+}
+
+void Menu_RunKey3_Callback(void) {
+		SelectCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->Key3Callback);
+	if (SelectCallBackFunc) {
+		SelectCallBackFunc();
+	}
+}
+
+void Menu_RunKey4_Callback(void) {
+		SelectCallBackFunc = GET_MENU_ITEM_POINTER(CurrentMenuItem->Key4Callback);
+	if (SelectCallBackFunc) {
+		SelectCallBackFunc();
 	}
 }
